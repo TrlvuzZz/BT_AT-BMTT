@@ -1,5 +1,11 @@
 # TÌM HIỂU THUẬT TOÁN MÃ HÓA DES, AES VÀ RSA
 
+## Thông tin sinh viên:
++ **Họ và tên:** Trần Lâm Vũ
++ **Lớp:** K59KMT.K01
++ **Mã số sinh viên:** K235510205299
++ **Trường:** Đại học Kỹ thuật Công nghiệp Thái Nguyên
+
 ## 1. Tìm hiểu thuật toán mã hóa DES, AES
 
 ### 1.1. Thuật toán DES
@@ -162,9 +168,7 @@ Du lieu giai ma: Hello AES
 
 Phần dữ liệu mã hóa sẽ thay đổi do chương trình tạo khóa ngẫu nhiên.
 
-```markdown
 ![Kết quả chạy AES trên PyCharm](images/aes-demo.png)
-```
 
 ---
 
