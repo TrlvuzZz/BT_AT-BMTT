@@ -443,8 +443,6 @@ Khóa AES
 Dữ liệu mã hóa ─→ AES ─→ Dữ liệu gốc
 ```
 
-Xuất thành `rsa-aes.png`.
-
 ---
 
 ## Kết luận
