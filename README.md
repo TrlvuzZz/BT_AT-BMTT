@@ -1,237 +1,296 @@
-# AN TOÀN VÀ BẢO MẬT THÔNG TIN
+# TÌM HIỂU THUẬT TOÁN MÃ HÓA DES, AES VÀ RSA
 
-## Tìm hiểu các thuật toán mã hóa DES, AES và RSA
+## 1. Tìm hiểu thuật toán mã hóa DES, AES
 
-Bài tập tìm hiểu về các thuật toán mã hóa hiện đại DES, AES và thuật toán mã hóa bất đối xứng RSA. Đồng thời thực hiện cài đặt AES bằng Python, so sánh tốc độ giữa AES và RSA và tìm hiểu cách kết hợp hai thuật toán.
+### 1.1. Thuật toán DES
 
-## Thông tin sinh viên:
-+ **Họ và tên:** Trần Lâm Vũ
-+ **Lớp:** K59KMT.K01
-+ **Mã số sinh viên:** K235510205299
-+ **Trường:** Đại học Kỹ thuật Công nghiệp Thái Nguyên
+DES (Data Encryption Standard) là thuật toán **mã hóa đối xứng**, sử dụng cùng một khóa cho quá trình mã hóa và giải mã.
 
----
+Một số đặc điểm:
 
-# 1. Thuật toán mã hóa DES và AES
+- Kích thước khối dữ liệu: **64 bit**.
+- Độ dài khóa hiệu dụng: **56 bit**.
+- Thực hiện **16 vòng** xử lý.
+- Hiện nay DES không còn an toàn do độ dài khóa ngắn.
 
-## 1.1. DES
-
-DES (Data Encryption Standard) là thuật toán mã hóa đối xứng, sử dụng cùng một khóa bí mật cho cả quá trình mã hóa và giải mã.
-
-### Đặc điểm
-
-- Dữ liệu được chia thành các khối 64 bit.
-- Khóa DES có 64 bit, trong đó 56 bit được sử dụng cho mã hóa.
-- Quá trình mã hóa gồm 16 vòng.
-- Mã hóa và giải mã sử dụng cùng một khóa.
-- Hiện nay DES không còn đủ an toàn do kích thước khóa nhỏ.
-
-### Quy trình
+Quy trình hoạt động cơ bản:
 
 ```text
-Bản rõ
-   ↓
-Khóa bí mật
-   ↓
-Mã hóa DES
-   ↓
+Dữ liệu gốc
+    ↓
+Hoán vị ban đầu
+    ↓
+16 vòng xử lý
+    ↓
+Hoán vị cuối
+    ↓
 Bản mã
-   ↓
-Giải mã DES
-   ↓
-Bản rõ ban đầu
 ```
 
 ---
 
-## 1.2. AES
+### 1.2. Thuật toán AES
 
-AES (Advanced Encryption Standard) là thuật toán mã hóa đối xứng được sử dụng phổ biến hiện nay.
+AES (Advanced Encryption Standard) cũng là thuật toán **mã hóa đối xứng**, nhưng có độ an toàn cao và được sử dụng phổ biến hơn DES.
 
-AES xử lý dữ liệu theo khối 128 bit và hỗ trợ ba kích thước khóa:
+AES có các đặc điểm:
 
-| Phiên bản | Độ dài khóa | Số vòng |
-|---|---:|---:|
-| AES-128 | 128 bit | 10 |
-| AES-192 | 192 bit | 12 |
-| AES-256 | 256 bit | 14 |
+- Kích thước khối: **128 bit**.
+- Hỗ trợ khóa: **128, 192 và 256 bit**.
+- Số vòng tương ứng: **10, 12 và 14 vòng**.
+- Có tốc độ xử lý nhanh, phù hợp để mã hóa lượng dữ liệu lớn.
 
-### Các bước chính của AES
+Một vòng mã hóa AES gồm:
 
 ```text
 SubBytes
-   ↓
+    ↓
 ShiftRows
-   ↓
+    ↓
 MixColumns
-   ↓
+    ↓
 AddRoundKey
 ```
 
-Trong vòng cuối của AES không thực hiện bước `MixColumns`.
+Quá trình giải mã thực hiện các phép biến đổi ngược để khôi phục dữ liệu ban đầu.
 
-Quá trình giải mã sử dụng các phép biến đổi ngược để khôi phục lại dữ liệu ban đầu.
-
----
-
-## 1.3. So sánh DES và AES
-
-| Tiêu chí | DES | AES |
-|---|---|---|
-| Loại mã hóa | Đối xứng | Đối xứng |
-| Kích thước khối | 64 bit | 128 bit |
-| Kích thước khóa | 56 bit | 128/192/256 bit |
-| Số vòng | 16 | 10/12/14 |
-| Độ an toàn hiện nay | Thấp | Cao |
-| Mức độ sử dụng | Ít sử dụng | Phổ biến |
-
-AES có kích thước khóa lớn hơn và khả năng bảo mật tốt hơn nên được sử dụng thay thế DES trong nhiều hệ thống hiện nay.
 
 ---
 
-# 2. Cài đặt AES bằng Python
+### 1.3. Cài đặt AES bằng Python trên PyCharm
 
-Cài đặt thư viện:
+Trong bài này sử dụng **Python trên PyCharm** để xây dựng chương trình minh họa mã hóa và giải mã AES.
+
+#### Bước 1: Tạo Project
+
+Mở **PyCharm** → chọn:
+
+```text
+New Project
+```
+
+Đặt tên project, ví dụ:
+
+```text
+AES_RSA
+```
+
+Sau đó chọn **Create**.
+
+#### Bước 2: Cài thư viện
+
+Trong PyCharm, mở:
+
+```text
+View → Tool Windows → Terminal
+```
+
+Nhập:
 
 ```bash
 pip install pycryptodome
 ```
 
-Code AES:
+Đợi đến khi xuất hiện thông báo cài đặt thành công.
+
+#### Bước 3: Tạo chương trình AES
+
+Chuột phải vào thư mục project:
+
+```text
+New → Python File
+```
+
+Đặt tên:
+
+```text
+aes_demo
+```
+
+Sau đó nhập code:
 
 ```python
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad, unpad
 
-# Dữ liệu cần mã hóa
-data = "An toan va bao mat thong tin".encode("utf-8")
-
-# Tạo khóa AES-128
+# Tạo khóa AES 128 bit
 key = get_random_bytes(16)
+
+# Dữ liệu cần mã hóa
+data = "Hello AES".encode()
 
 # Mã hóa
 cipher = AES.new(key, AES.MODE_CBC)
-ciphertext = cipher.encrypt(
+encrypted = cipher.encrypt(
     pad(data, AES.block_size)
 )
 
-print("Du lieu goc:", data.decode())
-print("Khoa AES:", key.hex())
-print("Ban ma:", ciphertext.hex())
+print("Du lieu ban dau:", data.decode())
+print("Du lieu ma hoa:", encrypted)
 
 # Giải mã
 decipher = AES.new(
     key,
     AES.MODE_CBC,
-    iv=cipher.iv
+    cipher.iv
 )
 
-plaintext = unpad(
-    decipher.decrypt(ciphertext),
+decrypted = unpad(
+    decipher.decrypt(encrypted),
     AES.block_size
 )
 
-print("Du lieu sau khi giai ma:", plaintext.decode())
+print("Du lieu giai ma:", decrypted.decode())
 ```
 
-### Kết quả
+#### Bước 4: Chạy chương trình
+
+Trong PyCharm, nhấn chuột phải vào `aes_demo.py` → chọn:
 
 ```text
-Dữ liệu gốc
-     ↓
-Mã hóa AES
-     ↓
-Bản mã
-     ↓
-Giải mã AES
-     ↓
-Dữ liệu ban đầu
+Run 'aes_demo'
+```
+
+Kết quả sẽ xuất hiện ở cửa sổ **Run** phía dưới:
+
+```text
+Du lieu ban dau: Hello AES
+Du lieu ma hoa: b'...'
+Du lieu giai ma: Hello AES
+```
+
+Phần dữ liệu mã hóa sẽ thay đổi do chương trình tạo khóa ngẫu nhiên.
+
+```markdown
+![Kết quả chạy AES trên PyCharm](images/aes-demo.png)
 ```
 
 ---
 
-# 3. Thuật toán RSA
+## 2. Tìm hiểu thuật toán mã hóa bất đối xứng RSA
 
-RSA là thuật toán mã hóa bất đối xứng.
+### 2.1. Thuật toán RSA
 
-Khác với AES, RSA sử dụng hai khóa:
+RSA (Rivest-Shamir-Adleman) là thuật toán **mã hóa bất đối xứng**.
+
+Khác với AES và DES, RSA sử dụng một cặp khóa:
+
+- **Public Key:** khóa công khai, có thể chia sẻ.
+- **Private Key:** khóa bí mật, cần được bảo vệ.
+
+Có thể biểu diễn:
 
 ```text
-Public Key  → Khóa công khai
-Private Key → Khóa bí mật
+              RSA
+               │
+        ┌──────┴──────┐
+        ↓             ↓
+   Public Key     Private Key
+   Công khai        Bí mật
 ```
-
-Public Key có thể được chia sẻ cho người khác, còn Private Key phải được chủ sở hữu giữ bí mật.
 
 ---
 
-## 3.1. Nguyên lý sinh cặp khóa RSA
+### 2.2. Nguyên lý sinh cặp khóa RSA
 
-Quá trình sinh khóa RSA:
+Đầu tiên chọn hai số nguyên tố:
 
-**Bước 1:** Chọn hai số nguyên tố `p` và `q`.
+```text
+p và q
+```
 
-**Bước 2:** Tính:
+Tính:
 
 ```text
 n = p × q
-```
-
-**Bước 3:** Tính:
-
-```text
 φ(n) = (p - 1)(q - 1)
 ```
 
-**Bước 4:** Chọn `e` sao cho:
+Tiếp theo chọn `e` sao cho phù hợp với `φ(n)` và tính `d` thỏa mãn:
 
 ```text
-gcd(e, φ(n)) = 1
+d × e ≡ 1 (mod φ(n))
 ```
 
-**Bước 5:** Tính `d` sao cho:
-
-```text
-e × d ≡ 1 (mod φ(n))
-```
-
-Cuối cùng thu được:
+Từ đó tạo được:
 
 ```text
 Public Key  = (e, n)
 Private Key = (d, n)
 ```
 
-Trong thực tế RSA sử dụng các số nguyên tố rất lớn để đảm bảo độ an toàn.
-
 ---
 
-## 3.2. Tạo cặp khóa RSA bằng Python
+### 2.3. Mã hóa và giải mã RSA
 
-```python
-from Crypto.PublicKey import RSA
+Khi mã hóa, dữ liệu `M` được chuyển thành bản mã `C`:
 
-# Tạo cặp khóa RSA 2048 bit
-key = RSA.generate(2048)
+```text
+C = M^e mod n
+```
 
-private_key = key.export_key()
-public_key = key.publickey().export_key()
+Trong đó `e` thuộc **Public Key**.
 
-print("PUBLIC KEY:")
-print(public_key.decode())
+Khi giải mã:
 
-print("\nPRIVATE KEY:")
-print(private_key.decode())
+```text
+M = C^d mod n
+```
+
+Trong đó `d` thuộc **Private Key**.
+
+Quy trình:
+
+```text
+Dữ liệu gốc
+     ↓
+Public Key
+     ↓
+   Mã hóa
+     ↓
+   Bản mã
+     ↓
+Private Key
+     ↓
+  Giải mã
+     ↓
+Dữ liệu gốc
 ```
 
 ---
 
-# 4. Các mô hình áp dụng RSA
+## 3. Các mô hình áp dụng thuật toán RSA
 
-## 4.1. Bảo mật cho người nhận
+### 3.1. Xác thực người gửi
 
-Người gửi sử dụng Public Key của người nhận để mã hóa thông tin.
+Trong ứng dụng chữ ký số, người gửi sử dụng **Private Key** để tạo chữ ký.
+
+Người nhận sử dụng **Public Key của người gửi** để kiểm tra chữ ký.
+
+```text
+Người gửi
+    ↓
+Private Key
+    ↓
+Tạo chữ ký
+    ↓
+Gửi dữ liệu + chữ ký
+    ↓
+Người nhận
+    ↓
+Public Key người gửi
+    ↓
+Kiểm tra chữ ký
+```
+
+Điều này giúp người nhận kiểm tra chữ ký có tương ứng với khóa bí mật của người gửi hay không.
+
+---
+
+### 3.2. Xác thực người nhận
+
+Khi cần bảo vệ thông tin gửi cho một người nhận cụ thể, **Public Key của người nhận** được sử dụng.
 
 ```text
 Người gửi
@@ -240,110 +299,156 @@ Public Key người nhận
     ↓
 Mã hóa
     ↓
-Bản mã
-    ↓
-Private Key người nhận
-    ↓
-Giải mã
+Dữ liệu mã hóa
     ↓
 Người nhận
+    ↓
+Private Key
+    ↓
+Giải mã
 ```
 
-Chỉ người sở hữu Private Key tương ứng mới có thể giải mã dữ liệu.
+Chỉ người có **Private Key tương ứng** mới có thể giải mã dữ liệu.
 
 ---
 
-## 4.2. Xác thực người gửi
+### 3.3. Xác thực cả người gửi và người nhận
 
-RSA có thể được sử dụng để tạo chữ ký số.
+Có thể kết hợp cả hai phương pháp:
+
+- Người gửi dùng **Private Key** để ký.
+- Sử dụng **Public Key của người nhận** để bảo vệ thông tin.
+- Người nhận dùng **Private Key** để giải mã.
+- Sau đó sử dụng **Public Key của người gửi** để kiểm tra chữ ký.
 
 ```text
+NGƯỜI GỬI
+
 Dữ liệu
-   ↓
-Tạo giá trị Hash
    ↓
 Private Key người gửi
    ↓
-Tạo chữ ký
+Ký dữ liệu
    ↓
-Dữ liệu + Chữ ký
+Public Key người nhận
+   ↓
+Mã hóa
+   ↓
+Gửi đi
+   ↓
+────────────────────
+   ↓
+NGƯỜI NHẬN
+   ↓
+Private Key người nhận
+   ↓
+Giải mã
    ↓
 Public Key người gửi
    ↓
 Kiểm tra chữ ký
 ```
 
-Người nhận sử dụng Public Key của người gửi để kiểm tra chữ ký, qua đó xác thực nguồn gốc và kiểm tra tính toàn vẹn của dữ liệu.
-
 ---
 
-## 4.3. Kết hợp cả hai
-
-Có thể kết hợp hai mô hình để vừa bảo mật dữ liệu vừa xác thực người gửi:
-
-```text
-Xác thực người gửi
-        +
-Bảo mật cho người nhận
-        ↓
-Bảo mật + Xác thực
-```
-
----
-
-# 5. So sánh AES và RSA
+### 3.4. So sánh thời gian mã hóa/giải mã RSA và AES
 
 | Tiêu chí | AES | RSA |
 |---|---|---|
 | Loại | Đối xứng | Bất đối xứng |
-| Số khóa | 1 khóa | 2 khóa |
-| Tốc độ | Nhanh | Chậm hơn |
-| Mã hóa dữ liệu lớn | Phù hợp | Không phù hợp |
-| Công dụng chính | Mã hóa dữ liệu | Bảo vệ khóa, chữ ký số |
+| Khóa | Một khóa bí mật | Public + Private |
+| Mã hóa | Nhanh | Chậm hơn |
+| Giải mã | Nhanh | Chậm hơn |
+| Dữ liệu lớn | Phù hợp | Không phù hợp để mã hóa trực tiếp |
+| Ứng dụng | Mã hóa dữ liệu | Trao đổi khóa, chữ ký số |
 
-AES có tốc độ mã hóa và giải mã nhanh nên phù hợp với lượng dữ liệu lớn.
-
-RSA yêu cầu nhiều phép tính phức tạp hơn nên có tốc độ chậm hơn AES. Vì vậy RSA thường được sử dụng để bảo vệ khóa hoặc tạo chữ ký số thay vì mã hóa toàn bộ dữ liệu.
+**AES nhanh hơn RSA** khi mã hóa và giải mã dữ liệu. Vì vậy RSA thường không được sử dụng để mã hóa trực tiếp lượng dữ liệu lớn.
 
 ---
 
-# 6. Kết hợp RSA và AES
+### 3.5. Kết hợp RSA và AES
 
-Có thể kết hợp ưu điểm của AES và RSA bằng phương pháp mã hóa lai (Hybrid Encryption).
+Có thể kết hợp RSA và AES để tận dụng ưu điểm của cả hai.
+
+**AES** được sử dụng để mã hóa dữ liệu:
 
 ```text
-Tạo khóa AES
-      ↓
-AES mã hóa dữ liệu
-      ↓
-RSA mã hóa khóa AES
-      ↓
-Gửi dữ liệu
-      ↓
-RSA giải mã khóa AES
-      ↓
-AES giải mã dữ liệu
+Dữ liệu
+   ↓
+  AES
+   ↓
+Dữ liệu mã hóa
 ```
 
-### Quy trình
+Khóa AES được bảo vệ bằng **RSA**:
 
-1. Tạo ngẫu nhiên một khóa AES.
-2. Sử dụng AES để mã hóa dữ liệu.
-3. Sử dụng RSA Public Key của người nhận để bảo vệ khóa AES.
-4. Gửi bản mã và khóa AES đã được bảo vệ.
-5. Người nhận sử dụng RSA Private Key để lấy lại khóa AES.
-6. Sử dụng khóa AES để giải mã dữ liệu.
+```text
+Khóa AES
+   ↓
+Public Key RSA
+   ↓
+Khóa AES được bảo vệ
+```
 
-Cách làm này tận dụng tốc độ xử lý nhanh của AES và khả năng bảo vệ, phân phối khóa của RSA.
+Phía người nhận:
+
+```text
+Khóa AES được bảo vệ
+          ↓
+   Private Key RSA
+          ↓
+       Khóa AES
+          ↓
+Dữ liệu mã hóa
+          ↓
+         AES
+          ↓
+    Dữ liệu gốc
+```
+
+Như vậy:
+
+- **AES:** mã hóa dữ liệu với tốc độ nhanh.
+- **RSA:** hỗ trợ bảo vệ/trao đổi khóa AES.
+- **AES + RSA:** tạo thành phương pháp mã hóa lai.
+
+```text
+              NGƯỜI GỬI
+
+Dữ liệu ─────→ AES ─────→ Dữ liệu mã hóa
+                ↑
+             Khóa AES
+                │
+                ↓
+         Public Key RSA
+                ↓
+        Khóa AES được bảo vệ
+
+                ↓
+              GỬI ĐI
+                ↓
+
+              NGƯỜI NHẬN
+
+Khóa AES được bảo vệ
+        ↓
+Private Key RSA
+        ↓
+Khóa AES
+        ↓
+Dữ liệu mã hóa ─→ AES ─→ Dữ liệu gốc
+```
+
+Xuất thành `rsa-aes.png`.
 
 ---
 
-# 7. Kết luận
+## Kết luận
 
-Qua bài tập có thể thấy:
+DES, AES và RSA là các thuật toán quan trọng trong bảo mật thông tin. **DES** hiện nay không còn phù hợp cho các hệ thống cần mức bảo mật cao do khóa ngắn. **AES** có tốc độ nhanh và phù hợp để mã hóa lượng dữ liệu lớn. **RSA** sử dụng cặp Public Key và Private Key, phù hợp cho trao đổi khóa và chữ ký số.
 
-- DES là thuật toán mã hóa đối xứng nhưng hiện nay không còn đảm bảo mức độ an toàn cần thiết.
-- AES là thuật toán mã hóa đối xứng có tốc độ nhanh và độ bảo mật cao.
-- RSA là thuật toán bất đối xứng sử dụng Public Key và Private Key.
-- AES phù hợp để mã hóa lượng dữ liệu lớn, trong khi RSA phù hợp cho bảo vệ khóa và chữ ký số.
-- Kết hợp RSA và AES giúp tận dụng được ưu điểm của cả hai thuật toán.
+Việc kết hợp **RSA + AES** giúp tận dụng tốc độ xử lý của AES và khả năng bảo vệ, phân phối khóa của RSA.
+
+---
+
+
